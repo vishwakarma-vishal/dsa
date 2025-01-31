@@ -1,1 +1,2 @@
-String is not palindrome
+Given array-> 4 5 12 5 10 19 
+Sorted array-> 4 5 5 10 12 19 

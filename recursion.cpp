@@ -85,13 +85,88 @@ bool checkPalindrome(string str, int start) {
     return checkPalindrome(str, start);
 }
 
+long long findPower(int n, int power) {
+    // base case
+    if (power == 0) return 1LL;
+
+    // processing and call
+    if (power % 2 == 0) {
+        return findPower(n, power/2) * findPower(n, power/2);
+    } else {
+        return n * findPower(n, power/2) * findPower(n, power/2);
+    }
+} 
+
+void printArray(int num[], int size) {
+   
+    for (int i = 0; i < size; i++) {
+        cout << num[i] << " ";
+    }
+    cout << endl;
+} 
+
+void bubbleSort(int *num, int size) {
+    //base case
+    if (size == 0) return;
+
+    // processing
+    int large = num[0];
+    int largeInd = 0;
+    for (int i = 0; i < size; i++) {
+        if(num[i] > large) {
+            large = num[i];
+            largeInd = i;
+        }
+    }
+    swap(num[largeInd], num[size - 1]);
+
+    // recursive relation
+    bubbleSort(num, size -1);
+}
+
+void selectionSort(int *num, int idx, int size) {
+    // base case 
+    if (idx == size - 2) return;
+
+    // processing
+    int smallest = num[idx];
+    int smallestIdx = idx;
+    for (int i = idx; i < size; i++) {
+        if (num[i] < smallest) {
+            smallest = num[i];
+            smallestIdx = i;
+        }
+    }
+    swap(num[smallestIdx], num[idx]);
+
+    // recursive call
+    selectionSort(num, idx + 1, size);
+}
+
+void insertionSort(int *num, int idx, int size) {
+    //base case
+    if (idx == size - 1) return;
+
+    //processing
+    int j = idx + 1;
+    while (j > 0 && num[j - 1] > num[j]) {
+        swap(num[j-1], num[j]);
+        j--;
+    }
+
+    //recursive call
+    insertionSort(num, idx + 1, size);
+}
+
 int main()
 {
-    string str = "amana";
+    int arr[] = {4, 5, 12, 5, 10, 19};
+    
+    cout << "Given array-> ";
+    printArray(arr, 6);
 
-    if(checkPalindrome(str, 0)) {
-        cout << "String is palindrome";
-    } else {
-        cout << "String is not palindrome";
-    }
+    insertionSort(arr, 1, 6);
+    
+    cout << "Sorted array-> ";
+    printArray(arr, 6);
 }
