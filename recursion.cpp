@@ -158,15 +158,106 @@ void insertionSort(int *num, int idx, int size) {
     insertionSort(num, idx + 1, size);
 }
 
+void merge(int *num, int low, int mid, int high) {
+    vector<int> temp;
+    int left = low;
+    int right = mid + 1;
+
+    while (left <= mid && right <= high) {
+        if(num[left] > num[right]) {
+            temp.push_back(num[right]);
+            right++;
+        } else {
+            temp.push_back(num[left]);
+            left++;
+        }
+    }
+
+    while (left <= mid) {
+        temp.push_back(num[left]);
+        left++;
+    }
+
+    while (right <= high) {
+        temp.push_back(num[right]);
+        right++;
+    }
+
+    // coping the element from temp to original array
+    for (int i = low; i <= high; i++) {
+        num[i] = temp[i - low];
+    }
+}
+
+void mergeSort(int *num, int low, int high) {
+    // base case
+    if (low == high) return;
+
+    // processing
+    int mid = (low + high) / 2;
+
+    // recursive call
+    mergeSort(num, low, mid);
+    mergeSort(num, mid + 1, high);
+    merge(num, low, mid, high);
+}
+
+int partition(int *num, int low, int high) {
+    int pivot = num[low];
+    int i = low;
+    int j = high;
+
+    while(i < j) {
+        while(i < high && num[i] <= pivot) {
+            i++;
+        }
+
+        while(j >= 0 && num[j] > pivot) {
+            j--;
+        }
+
+        if(i < j) swap(num[i], num[j]);
+    }
+    swap(num[low], num[j]);
+
+    return j;
+}
+
+void quickSort(int *num, int low, int high) {
+    if (low >= high) return;
+
+    int pivotInd = partition(num, low, high);
+    quickSort(num, low, pivotInd - 1);
+    quickSort(num, pivotInd + 1, high);
+}
+
+#define mod 1000000007
+
+// long long power(long long n, long long p) {
+//     long long ans = 1;
+
+//     for (int i = 0; i < p; i++) {
+//         ans = (ans * n) % mod;
+//     }
+
+//     return ans;
+// }
+
+long long power(long long n, long long p){
+    if(p == 0) {
+        return 1;
+    }
+
+    long long ans = 1;
+    ans = (ans * n) % mod;
+    ans = (ans * power(n, p - 1)) % mod;
+    return ans;
+}
+
 int main()
 {
-    int arr[] = {4, 5, 12, 5, 10, 19};
-    
-    cout << "Given array-> ";
-    printArray(arr, 6);
-
-    insertionSort(arr, 1, 6);
-    
-    cout << "Sorted array-> ";
-    printArray(arr, 6);
+    char ch;
+    while (cin.get(ch)) {
+        if (ch != '.') cout << ch; // Print everything except dots
+    }
 }
