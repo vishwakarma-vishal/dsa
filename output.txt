@@ -1,0 +1,4 @@
+Top element is 30
+Top element is 20
+Top element is 10
+Stack size is 7
